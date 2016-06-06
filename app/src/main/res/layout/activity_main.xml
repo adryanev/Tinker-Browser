@@ -13,20 +13,14 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         >
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/tool_bar"
-            />
-        <FrameLayout
-            android:id="@+id/frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+
 
             <include
                 android:id="@+id/browser"
-                layout="@layout/browser_fragment"
+                layout="@layout/new_browser"
                 ></include>
-        </FrameLayout>
+
 
     </LinearLayout>
 
