@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -164,7 +165,7 @@ public class MainBrowser extends AppCompatActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                Drawable draw = getResources().getDrawable(R.drawable.custom_progress_bar);
+                Drawable draw = ResourcesCompat.getDrawable(getResources(),R.drawable.custom_progress_bar,null);
                 progressBar.setProgressDrawable(draw);
                 progressBar.setProgress(0);
                 FrameLayout progressBarLayout = (FrameLayout) findViewById(R.id.progressBarlayout);
@@ -173,7 +174,7 @@ public class MainBrowser extends AppCompatActivity {
                 progressBar.incrementProgressBy(newProgress);
 
                 if(newProgress == 100){
-                    progressBar.setVisibility(View.GONE);
+                    progressBarLayout.setVisibility(View.GONE);
 
                 }
             }
@@ -217,6 +218,15 @@ public class MainBrowser extends AppCompatActivity {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && browser.canGoBack() ){
+            browser.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -241,19 +251,13 @@ public class MainBrowser extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainBrowser.this);
         builder.setTitle(getString(R.string.warning));
         builder.setMessage(getString(R.string.warningBlocked));
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 sendEmail(url);
                 sendSMS(url);
 
-            }
-        });
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
             }
         });
         builder.setIcon(R.drawable.ic_warning_black_24dp);
@@ -569,6 +573,12 @@ public class MainBrowser extends AppCompatActivity {
      * Custom WebView
      */
     class CustomWebViewClient extends WebViewClient {
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return super.shouldOverrideUrlLoading(view, url);
+        }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
