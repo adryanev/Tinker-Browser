@@ -1,6 +1,7 @@
 package com.adryanev.tinkerbrowser;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.res.ResourcesCompat;
@@ -40,14 +42,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -155,7 +149,7 @@ public class MainBrowser extends AppCompatActivity {
                 {
                     public void onClick(DialogInterface dialog, int id)
                     {
-                        new DownloadAsyncTask().execute(url);
+                        download(url);
                     }
 
                 }).setNegativeButton((R.string.cancel), new DialogInterface.OnClickListener()
@@ -206,12 +200,6 @@ public class MainBrowser extends AppCompatActivity {
 
         });
 
-        browser.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
         //in case browser is losing focus
         browser.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -231,6 +219,26 @@ public class MainBrowser extends AppCompatActivity {
         browser.loadUrl("file:///android_asset/speeddial/tinker_speed_dial.html");
         browser.requestFocus();
 
+    }
+
+    private void download(String url) {
+        String filename= url.substring(url.lastIndexOf("/"));
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setDescription("Tinker Browser "+ url);
+        request.setTitle("Downloading " +filename);
+
+        // in order for this if to run, you must use the android 3.2 to compile your app
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        }
+
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+        request.setVisibleInDownloadsUi(true);
+
+        // get download service and enqueue file
+        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
     }
 
 
@@ -261,8 +269,6 @@ public class MainBrowser extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
-
 
     /**
      * This method will call sendEmail(String url) method when invoked.
@@ -358,7 +364,6 @@ public class MainBrowser extends AppCompatActivity {
         }
     }
 
-
     /**
      * Refreshing the browser
      * @param view
@@ -383,91 +388,6 @@ public class MainBrowser extends AppCompatActivity {
         startActivity(intent);
 
     }
-
-    /**
-     * Download Asynchronous Task Module
-     */
-    class DownloadAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String result = "";
-            String urlString = params[0];
-
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                InputStream inputStream = null;
-                FileOutputStream fileOutputStream = null;
-
-                try{
-                    URL url = new URL(urlString);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    inputStream = connection.getInputStream();
-
-                    String fileName = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/TinkerBrowser";
-                    File directory = new File(fileName);
-                    File file = new File(directory, urlString.substring(urlString.lastIndexOf("/")));
-                    directory.mkdirs();
-
-                    //input-output file
-                    fileOutputStream = new FileOutputStream(file);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[1024];
-                    int length;
-
-                    while (inputStream.available() > 0 && (length = inputStream.read(buffer)) != -1 ){
-                        byteArrayOutputStream.write(buffer, 0 , length);
-
-                    }
-
-                    fileOutputStream.write(byteArrayOutputStream.toByteArray());
-                    fileOutputStream.flush();
-
-                    result =   getString(R.string.downloaded)+file.getAbsolutePath();
-
-                } catch (Exception e) {
-                    Log.e(MainBrowser.class.toString(), e.getMessage(), e);
-                    result = e.getClass().getSimpleName() + " "+ e.getMessage();
-                    e.printStackTrace();
-                }
-                finally {
-                    if (inputStream != null){
-                        try {
-                            inputStream.close();
-                        }catch (IOException e) {
-                            Log.e(MainBrowser.class.toString(), e.getMessage(), e);
-                            result = e.getClass().getSimpleName() + " " + e.getMessage();
-                            e.printStackTrace();
-                        }
-
-                    }
-                    if (fileOutputStream != null){
-                        try{
-                            fileOutputStream.close();
-                        } catch (IOException e) {
-                            Log.e(MainBrowser.class.toString(), e.getMessage(), e);
-                            result = e.getClass().getSimpleName() + " " + e.getMessage();
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            else {
-                result =getString(R.string.noStorage);
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainBrowser.this);
-            builder.setMessage(s).setPositiveButton(R.string.ok, null).setTitle(R.string.download);
-            builder.show();
-        }
-    }
-
-
-
 
     /**
      * Checking network status
