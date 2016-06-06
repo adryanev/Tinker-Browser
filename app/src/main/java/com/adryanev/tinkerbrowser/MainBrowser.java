@@ -115,7 +115,6 @@ public class MainBrowser extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
 
-
         actionBarDrawerToggle.syncState();
 
         urlEditText = (EditText) findViewById(R.id.url);
@@ -207,7 +206,12 @@ public class MainBrowser extends AppCompatActivity {
 
         });
 
-
+        browser.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
         //in case browser is losing focus
         browser.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -464,6 +468,7 @@ public class MainBrowser extends AppCompatActivity {
 
 
 
+
     /**
      * Checking network status
      */
@@ -666,7 +671,7 @@ public class MainBrowser extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.browser);
+        setContentView(R.layout.new_browser);
 
     }
 

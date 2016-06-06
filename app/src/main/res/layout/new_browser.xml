@@ -38,13 +38,14 @@
                     <EditText
 
 
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
+
+                        android:layout_marginRight="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/url"
                         android:layout_alignParentTop="true"
                         android:hint="@string/input_a_url_or_search"
-                        android:ems="11"
+                        android:ems="8"
                         android:inputType="textUri"
                         android:selectAllOnFocus="true"
                         />
@@ -106,12 +107,15 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="fill_vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <WebView
             xmlns:android="http://schemas.android.com/apk/res/android"
