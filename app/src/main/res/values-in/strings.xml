@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mailSubjectBlock">Mencoba membuka situs yang diblokir</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="closeDrawer">Drawer Tertutup</string>
+    <string name="input_a_url_or_search">Masukan alamat web atau telusuri</string>
+    <string name="openDrawer">Drawer Terbuka</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tinker Browser</string>
+    <string name="forward">Maju</string>
+    <string name="back">Mundur</string>
+    <string name="Stop">Berhenti</string>
+    <string name="history">Riwayat</string>
+    <string name="favicon">favicon</string>
+    <string name="download">Unduh</string>
+    <string name="downloadQuestion">Apakah anda ingin mengunduh file ini?</string>
+    <string name="ok">Ya</string>
+    <string name="cancel">Batal</string>
+    <string name="downloaded">"File berhasil diunduh! :  "</string>
+    <string name="noStorage">Penyimpanan tidak tersedia!</string>
+    <string name="noConnection">Koneksi internet tidak tersedia</string>
+    <string name="error">Galat</string>
+    <string name="noHistory">Tidak ada riwayat.</string>
+    <string name="warning">Peringatan!</string>
+    <string name="mailSubject">Riwayat Penelusuran</string>
+    <string name="warningBlocked">Anda mencoba membuka situs yang diblokir!</string>
+</resources>

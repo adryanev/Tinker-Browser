@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainBrowser">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/url"
+                android:layout_alignParentTop="true"
+                android:hint="@string/input_a_url_or_search"
+                android:ems="11"
+                android:inputType="textUri"
+                android:selectAllOnFocus="true"
+                />
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/url"
+                android:enabled="false"
+                android:onClick="back"
+                android:background="@drawable/ic_arrow_back_disabled"/>
+            <Button
+                android:id="@+id/forwardButton"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/url"
+                android:layout_toRightOf="@+id/backButton"
+                android:enabled="false"
+                android:onClick="forward"
+                android:background="@drawable/ic_arrow_forward_disabled"/>
+            <Button
+                android:id="@+id/stopButton"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/url"
+                android:layout_toRightOf="@+id/forwardButton"
+                android:enabled="false"
+                android:onClick="stop"
+                android:background="@drawable/ic_close_disabled"/>
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/refreshButton"
+                android:layout_below="@+id/url"
+                android:layout_toRightOf="@+id/stopButton"
+                android:enabled="true"
+                android:onClick="refresh"
+                android:background="@drawable/ic_refresh_black_24dp"
+                />
+
+        </RelativeLayout>
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBarlayout"
+            android:visibility="gone">
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:id="@+id/progressBar"
+                android:progressDrawable="@drawable/custom_progress_bar"/>
+        </FrameLayout>
+        <WebView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/webkit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>
