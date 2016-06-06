@@ -211,6 +211,8 @@ public class MainBrowser extends AppCompatActivity {
                 return false;
             }
         });
+        browser.loadUrl("file:///android_asset/speeddial/tinker_speed_dial.html");
+        browser.requestFocus();
 
     }
 
