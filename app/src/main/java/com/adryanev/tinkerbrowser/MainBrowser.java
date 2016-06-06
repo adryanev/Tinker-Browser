@@ -67,6 +67,7 @@ public class MainBrowser extends AppCompatActivity {
     Toolbar toolbar;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,8 @@ public class MainBrowser extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -90,19 +93,27 @@ public class MainBrowser extends AppCompatActivity {
             }
         });
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.openDrawer, R.string.closeDrawer){
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.openDrawer,
+                R.string.closeDrawer){
             @Override
             public void onDrawerOpened(View drawerView) {
+                supportInvalidateOptionsMenu();
                 super.onDrawerOpened(drawerView);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                supportInvalidateOptionsMenu();
                 super.onDrawerClosed(drawerView);
             }
         };
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
 
         actionBarDrawerToggle.syncState();
 
@@ -195,7 +206,12 @@ public class MainBrowser extends AppCompatActivity {
 
         });
 
-
+        browser.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
         //in case browser is losing focus
         browser.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -217,6 +233,18 @@ public class MainBrowser extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && browser.canGoBack() ){
@@ -234,13 +262,7 @@ public class MainBrowser extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if(id == R.id.action_settings) return true;
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * This method will call sendEmail(String url) method when invoked.
@@ -446,6 +468,7 @@ public class MainBrowser extends AppCompatActivity {
 
 
 
+
     /**
      * Checking network status
      */
@@ -648,7 +671,7 @@ public class MainBrowser extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.browser_fragment);
+        setContentView(R.layout.new_browser);
 
     }
 
