@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Tinker Browser</string>
+    <string name="history">Riwayat</string>
+    <string name="download">Unduh</string>
+    <string name="downloadQuestion">Apakah anda ingin mengunduh file ini?</string>
+    <string name="ok">Ya</string>
+    <string name="cancel">Batal</string>
+    <string name="noConnection">Koneksi internet tidak tersedia</string>
+    <string name="error">Galat</string>
+    <string name="warning">Peringatan!</string>
+    <string name="warningBlocked">Anda mencoba membuka situs yang diblokir!</string>
     <string name="mailSubjectBlock">Mencoba membuka situs yang diblokir</string>
-    <string name="action_settings">Pengaturan</string>
     <string name="closeDrawer">Drawer Tertutup</string>
     <string name="input_a_url_or_search">Masukan alamat web atau telusuri</string>
     <string name="openDrawer">Drawer Terbuka</string>

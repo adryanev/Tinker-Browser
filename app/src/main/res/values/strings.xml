@@ -1,24 +1,15 @@
 <resources>
     <string name="app_name">Tinker Browser</string>
-    <string name="forward">Forward</string>
-    <string name="back">Back</string>
-    <string name="Stop">Stop</string>
     <string name="history">History</string>
-    <string name="favicon">Favicon</string>
     <string name="download">Download</string>
     <string name="downloadQuestion">Do you want to download this file?</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
-    <string name="downloaded">"File Downloaded! :  "</string>
-    <string name="noStorage">Storage not Available</string>
     <string name="noConnection">Internet Connection is not Available</string>
     <string name="error">Error</string>
-    <string name="noHistory">There are no histories</string>
     <string name="warning">Warning!</string>
-    <string name="mailSubject">Browsing History</string>
     <string name="warningBlocked">You\'re trying to open a blocked site!</string>
     <string name="mailSubjectBlock">Attempting to open blocked site</string>
-    <string name="action_settings">Settings</string>
     <string name="openDrawer">Drawer Opened</string>
     <string name="closeDrawer">Drawer Closed</string>
     <string name="input_a_url_or_search">Input a website or search</string>
