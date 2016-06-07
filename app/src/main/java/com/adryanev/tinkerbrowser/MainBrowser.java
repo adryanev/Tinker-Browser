@@ -298,7 +298,7 @@ public class MainBrowser extends AppCompatActivity {
     private void sendSMS(String url) {
         String number = "+6282174969356";
         Uri uri = Uri.parse("sms:"+number);
-        String smsBody = "User is trying to open a blocked site ("+url+")";
+        String smsBody = getString(R.string.tryingOpen)+" ("+url+")";
         Intent i = new Intent(Intent.ACTION_SENDTO,uri);
         i.putExtra("sms_body",smsBody);
         i.setData(uri);
@@ -469,7 +469,8 @@ public class MainBrowser extends AppCompatActivity {
         Uri uri = Uri.parse("mailto:"+email);
         Intent intent = new Intent(Intent.ACTION_SENDTO,uri);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mailSubjectBlock));
-        intent.putExtra(Intent.EXTRA_TEXT,"User trying to open a blocked site ("+url+")");
+        String text = getString(R.string.tryingOpen)+" ("+url+")";
+        intent.putExtra(Intent.EXTRA_TEXT,text);
         startActivity(intent);
 
     }
@@ -482,7 +483,7 @@ public class MainBrowser extends AppCompatActivity {
             String email = "wanabee54@gmail.com";
             Uri uri = Uri.parse("mailto:" + email);
             Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Browsing History");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.browsingHistory));
 
             StringBuilder stringBuilder = new StringBuilder();
 

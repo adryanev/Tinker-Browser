@@ -14,4 +14,6 @@
     <string name="closeDrawer">Drawer Tertutup</string>
     <string name="input_a_url_or_search">Masukan alamat web atau telusuri</string>
     <string name="openDrawer">Drawer Terbuka</string>
+    <string name="browsingHistory">Riwayat Penjelajahan</string>
+    <string name="tryingOpen">Pengguna mencoba membuka situs yang di blokir</string>
 </resources>
