@@ -13,4 +13,6 @@
     <string name="openDrawer">Drawer Opened</string>
     <string name="closeDrawer">Drawer Closed</string>
     <string name="input_a_url_or_search">Input a website or search</string>
+    <string name="browsingHistory">Browsing History</string>
+    <string name="tryingOpen">User is trying to open a blocked site</string>
 </resources>
