@@ -17,14 +17,14 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -60,10 +60,12 @@ public class MainBrowser extends AppCompatActivity {
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
+    SQLiteOpenHelper siteDataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        siteDataBaseHelper = new SiteDatabaseHelper(this);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -296,7 +298,7 @@ public class MainBrowser extends AppCompatActivity {
      * @param url
      */
     private void sendSMS(String url) {
-        String number = "+6282174969356";
+        String number = "+6280989999";
         Uri uri = Uri.parse("sms:"+number);
         String smsBody = getString(R.string.tryingOpen)+" ("+url+")";
         Intent i = new Intent(Intent.ACTION_SENDTO,uri);
@@ -311,7 +313,7 @@ public class MainBrowser extends AppCompatActivity {
      * @return
      */
     private ArrayList<String> getBlockedSites() {
-        SQLiteOpenHelper siteDataBaseHelper = new SiteDatabaseHelper(this);
+
         SQLiteDatabase db = siteDataBaseHelper.getReadableDatabase();
 
         blockedSites = new ArrayList<>();
@@ -319,7 +321,11 @@ public class MainBrowser extends AppCompatActivity {
         while (cursor.moveToNext()){
 
             try{
-                blockedSites.add(cursor.getString(cursor.getColumnIndex("website")));
+                int value = cursor.getColumnIndex("website");
+                if (value < 0) {
+                    throw new Exception("not found");
+                }
+                blockedSites.add(cursor.getString(value));
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -429,7 +435,7 @@ public class MainBrowser extends AppCompatActivity {
             //checking if user input is valid url
 
             if (Patterns.WEB_URL.matcher(urlEditText.getText().toString()).matches()) {
-                urlEditText.setText("http://" + urlEditText.getText().toString()+"/");
+                urlEditText.setText("https://" + urlEditText.getText().toString()+"/");
 
                 //checking if the site is from blockedSite List
                for(String url : blockedSites) {
@@ -443,7 +449,7 @@ public class MainBrowser extends AppCompatActivity {
                 if(found == false)browser.loadUrl(urlEditText.getText().toString());
 
             }else{
-                browser.loadUrl("http://www.google.com/search?q=" + urlEditText.getText().toString());
+                browser.loadUrl("https://www.google.com/search?q=" + urlEditText.getText().toString());
             }
         }
     }

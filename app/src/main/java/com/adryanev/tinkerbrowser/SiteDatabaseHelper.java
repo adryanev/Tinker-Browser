@@ -12,7 +12,7 @@ import android.util.Patterns;
  */
 public class SiteDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "tinkerbrowser";
+    private static final String DB_NAME = "tinkerbrowser.db";
     private static final int DB_VERSION = 2;
 
 
@@ -27,8 +27,8 @@ public class SiteDatabaseHelper extends SQLiteOpenHelper {
                 "website TEXT); ";
         db.execSQL(sql);
 
-        insertSite(db,"http://www.kaskus.co.id/");
-        insertSite(db,"http://kumpulbagi.id/");
+        insertSite(db,"https://www.kaskus.co.id/");
+        insertSite(db,"https://kumpulbagi.id/");
 
     }
 
